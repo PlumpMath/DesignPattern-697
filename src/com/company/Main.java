@@ -43,7 +43,10 @@ public class Main extends JFrame{
                 } else {
                     button = new ThemeBleue().createButton();
                 }
-                getContentPane().add(button);           }
+                getContentPane().add(button);
+                getContentPane().repaint();
+                getContentPane().revalidate();
+            }
         });
     }
 
