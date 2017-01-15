@@ -1,75 +1,78 @@
 package com.company;
 
-import javafx.event.EventHandler;
-import javafx.scene.control.ComboBox;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import javax.swing.*;
 
 public class Main extends JFrame{
 
+
     private static final long serialVersionUID = 1L;
     public JButton button;
 
-    public Main() {
-
-        // set flow layout for the frame
-        this.getContentPane().setLayout(new FlowLayout());
-        Object[] elements = new Object[]{"Bleue", "Rouge"};
-        JLabel label1 = new JLabel("Changer le theme");
-
-        getContentPane().add(label1);
-
-
-
-        final JComboBox comboBox = new JComboBox(elements);
-        getContentPane().add(comboBox);
-        button = new ThemeBleue().createButton();
-        add(button);
-        comboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                JComboBox comboBox = (JComboBox) e.getSource();
-                Object selected = comboBox.getSelectedItem();
-
-                getContentPane().remove(button);
-                if (selected.equals("Rouge")) {
-                    button = new ThemeRouge().createButton();
-                } else {
-                    button = new ThemeBleue().createButton();
-                }
-                getContentPane().add(button);
-                getContentPane().repaint();
-                getContentPane().revalidate();
-            }
-        });
+    private static void resetLookAndFeel() {
+        try {
+            // Set System L&F
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
     }
 
+
+
+
     public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
+        resetLookAndFeel();
+        final ThemeCatalog themes = new ThemeCatalog();
 
-        //creating and showing this application's GUI.
-
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+       SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
 
-                JFrame frame = new Main();
-                //Display the window.
-                frame.pack();
-                //frame.setSize(200, 200);
-                frame.setVisible(true);
+                JDialog dialog = new JDialog();
+                dialog.setSize(300, 200);//On lui donne une taille
+                dialog.setTitle("Theme boutton"); //On lui donne un titre
+                dialog.setVisible(true);//On la rend visible
 
+                JPanel pan = new JPanel();
+                pan.setLayout(new FlowLayout());
+
+                dialog.add(pan);
+
+                JComboBox themeSelector = new JComboBox(themes);
+
+                themeSelector.setRenderer(new ThemeCellRenderer());
+                JButton button = new ThemeBleue().createButton("Button");
+
+
+                themeSelector.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        pan.remove(1);
+                        IThemeFactory but = (IThemeFactory) themes.getSelectedItem();
+                        pan.add(but.createButton("Button"));
+
+                        pan.repaint();
+                        pan.revalidate();
+                    }
+                });
+
+
+                pan.add(themeSelector);
+                pan.add(button);
+
+                dialog.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
 
             }
 
         });
-
-	// write your code here
     }
 }

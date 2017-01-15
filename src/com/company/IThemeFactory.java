@@ -7,6 +7,7 @@ import javax.swing.*;
  */
 interface IThemeFactory {
 
-    public  JButton createButton();
+    String getName();
+    JButton createButton(String text);
 
 }

@@ -7,8 +7,13 @@ import javax.swing.*;
  */
 public class ThemeBleue implements IThemeFactory {
 
-    public JButton createButton()
+    @Override
+    public String getName() {
+        return "Bleue";
+    }
+
+    public JButton createButton(String text)
     {
-        return(new ButtonBleue().createButton());
+        return new ButtonBleue(text);
     }
 }

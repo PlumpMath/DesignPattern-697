@@ -6,13 +6,11 @@ import java.awt.*;
 /**
  * Created by Netoun on 04/01/2017.
  */
-public class ButtonBleue extends JButton implements IButton{
+public class ButtonBleue extends JButton {
 
-
-    @Override
-    public JButton createButton() {
-        JButton buttonBleue = new JButton("Bleue");
-        buttonBleue.setBackground(Color.blue);
-        return buttonBleue;
+    public ButtonBleue(String text) {
+        super();
+        this.setText(text);
+        this.setBackground(Color.BLUE);
     }
 }

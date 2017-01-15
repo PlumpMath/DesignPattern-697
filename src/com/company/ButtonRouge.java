@@ -1,19 +1,19 @@
 package com.company;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 
 /**
  * Created by Netoun on 04/01/2017.
  */
-public class ButtonRouge extends JButton implements IButton  {
+public class ButtonRouge extends JButton {
 
-    @Override
-    public JButton createButton() {
-        JButton buttonRouge = new JButton("Rouge");
-        buttonRouge.setBackground(Color.red);
-        return buttonRouge;
+    public ButtonRouge(String text) {
+        super();
+        this.setText(text);
+        this.setBackground(Color.RED);
     }
+
+
 }
